@@ -1,7 +1,7 @@
 # Java App Text Inspector
-[![Build Status](https://travis-ci.com/universy-code/java-app-config-file.svg?branch=master)](https://travis-ci.com/universy-code/java-app-config-file)
+[![Build Status](https://travis-ci.com/universy-code/java-app-text-inspector.svg?branch=master)](https://travis-ci.com/universy-code/java-app-text-inspector)
 
-## Programa de java que analiza el uso de las distintas traducciones en toda la aplicacion"
+## Programa de java que analiza el uso de las distintas traducciones en toda la aplicacion
 
 
 ### Para compilar 
