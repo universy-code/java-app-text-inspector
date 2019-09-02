@@ -18,5 +18,5 @@
 The program uses the following paths from which is run: 
 
 - `./lib/com/universy/apptext/translations/i18n` for the i18n files
-- `./lib` para the usages
+- `./lib` for the usages
 
