@@ -3,12 +3,33 @@ language: java
 jdk:
   - oraclejdk8
 
+dist: trusty
+
+notifications:
+  slack:
+    rooms:
+      secure: t4SalXv+ANY4hrOVv75iRWuQImzZQwKi1Z5Pjia3kjx3ymzs7VPK4rFkEQN1ZB7hEAuzlO70x6gbhUJ1eNU90HILKjcXvSRxKWgvZb/U8gWR4tfRHazk9wWLz2jus9VC490INr1f1v0vpcIOJcO6vczOKfTD64MyGQd3efzzsG89HPYYbPrffIhJ530tONwP55zUgw/ci4bwIEiOcfo1TxGWiGGcYrhDJubt+fMPiB8KywdxFdq5gCz+i1qcSmEt/Zb5dOApncEo7uTVzNQM4lefrk9+i9vGXp8PLaasbv1uxQXchr/VT/bRcUfXyIIJeLds7Aam65jx6UPC1pdN2jyrbfOR/uxuJtc5y7T/g/8+gjTvva0iI/SQWw9GI0NKzXqKcnKNFlTxYssXT06wXk4rDq8U5ONal1J52uB18+Fh4rDVQ0+O01ykgGFpRitbarWx2kYUNykxX9fIH92DGa51SYsAMF0vEfOrqP5ELAVFs8/xpiWQmYzZrJEDELfGYYxCt1jqjEab85h6D6IFusBpuLu5MmACu7WRnTLmX+00pgMstJMOGWQmikwzEKWqySYiH4VS4qvfHwHT5hwTOQ54WSMSZ6gEwUVc+kUzo2wKJVX9dL0FrWS8s47ws4x9gpdTbDDsm2GbsbZBo/WHHUAd5ePG4S3ugdz5vK4t2ww=
+    on_success: always
+    on_failure: always
+
 os:
   - linux
 
 branches:
   only:
     - master
+
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+
+after_script:
+  - |
+    if [[ "$TRAVIS_TEST_RESULT" == 0 ]]; then
+      JACOCO_SOURCE_PATH=src/main/java ./cc-test-reporter format-coverage ./build/reports/jacoco/test/jacocoTestReport.xml --input-type jacoco
+      ./cc-test-reporter upload-coverage -r $CC_TEST_REPORTER_ID
+    fi
 
 script:
   - ./gradlew clean
